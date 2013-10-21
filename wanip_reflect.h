@@ -35,7 +35,7 @@ namespace joshLib
 class Wanip
 {
 public:
-    Wanip (int ttl = 3, const char *url = "1.1.1.1" /*, char *if = "eth1" */);
+    Wanip (int ttl = 3, const char *url = "1.1.1.1" /*, const char *if = "eth1" */);
     ~Wanip ();
 public:
     uint32_t getWanip ();
@@ -71,45 +71,38 @@ public:
     static char *pr_addr(uint32_t addr);
 };
 
+
+
+
+
+/**
+ * @brief   test case of class Wanip
+ *
+ * test.cpp
+ * g++ -g -o test test.cpp wanip_reflect.cpp
+ * 
+ * #include  <stdio.h>
+ * #include  "wanip_reflect.h"
+ * 
+ * using namespace joshLib;
+ * 
+ * int main(int argc, char *argv[])
+ * {
+ *     return test_Wanip ();
+ * }
+ * 
+ * 
+ * joshua:UDP_hole_punching$ sudo ./test                               
+ * 
+ * RR:     192.168.200.2
+ *         183.20.163.152
+ *         183.57.105.50
+ *         183.57.116.5
+ * 
+ * wan ip of my ADSL Router: 183.20.163.152
+ *
+ */
+int test_Wanip ();
+
 }
 #endif // _WANIP_REFLECT_H
-
-
-/*
-test.cpp
-g++ -g -o test test.cpp wanip_reflect.cpp
-
-joshua:UDP_hole_punching$ sudo ./test                               
-
-RR:     192.168.200.2
-        125.90.116.5
-        183.57.105.50
-        183.57.116.9
-*/
-/*
-
-#include  <stdio.h>
-#include  "wanip_reflect.h"
-
-using namespace joshLib;
-
-int main(int argc, char *argv[])
-{
-    class Wanip wip;
-
-    ssize_t RRs = 0;
-    uint32_t *RRaray = wip.getRR (RRs);
-    printf("\nRR: ");
-
-    for (int i = 0; i < RRs; ++i) {
-        printf ("\t%s\n", Wanip::pr_addr (RRaray[i]));
-    }
-
-    printf ("\n");
-    printf ("wan ip of my ADSL Router: %s\n",
-            Wanip::pr_addr (wip.getWanip ()));
-
-    return 0;
-}
-
- */

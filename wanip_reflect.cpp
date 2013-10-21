@@ -94,9 +94,11 @@ char *Wanip::getLastErrorStr ()
 }
 
 /**
- * @brief   core procedure
+ * @brief   core procedure, 3s time out
  *
- * @return  
+ * @retval  0   success  
+ *          -1  DNS resolve error
+ *          -2  3s timeout
  *
  * @callergraph
  */
@@ -154,7 +156,7 @@ int Wanip::do_wanip_reflect ()
             gettimeofday (&now, NULL);
             timersub (&now, &start, &res);
             if (timercmp (&res, &timeout, >))
-                return 0;
+                return -2;
         }
     }
 
@@ -381,6 +383,37 @@ int Wanip::recv_icmp (int icmp_sock, int pid)
 
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+int test_Wanip ()
+{
+    class Wanip wip;
+
+    ssize_t RRs = 0;
+    uint32_t *RRaray = wip.getRR (RRs);
+    printf("\nRR: ");
+
+    for (int i = 0; i < RRs; ++i) {
+        printf ("\t%s\n", Wanip::pr_addr (RRaray[i]));
+    }
+
+    if (0 != wip.getWanip ()) {
+        printf ("\n");
+        printf ("wan ip of my ADSL Router: %s\n",
+                Wanip::pr_addr (wip.getWanip ()));
+    }
+
+    return 0;
+}
+
 
 } // namespace joshLib
 
